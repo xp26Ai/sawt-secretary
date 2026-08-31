@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#0E1117"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/app_name"
+            android:textColor="#E6EDF5"
+            android:textSize="26sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="18dp"
+            android:text="يرد على مكالماتك وأنت مشغول، ويرسل لك الملخّص"
+            android:textColor="#6B7889"
+            android:textSize="13sp" />
+
+        <!-- ══ المفتاح الرئيسي ══ -->
+        <LinearLayout
+            android:id="@+id/mainCard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#1A2029"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <Switch
+                android:id="@+id/enabled"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="السكرتير جاهز"
+                android:textColor="#E6EDF5"
+                android:textSize="17sp" />
+
+            <TextView
+                android:id="@+id/statusLine"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:textColor="#9AA8BB"
+                android:textSize="13sp" />
+
+            <Button
+                android:id="@+id/permBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:text="امنح الأذونات المطلوبة"
+                android:visibility="gone" />
+        </LinearLayout>
+
+        <!-- ══ الخط الرقمي ══ -->
+        <TextView style="@style/Head" android:text="خط السكرتير الرقمي — الطريقة الاحترافية" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#1A2029"
+            android:padding="14dp"
+            android:lineSpacingMultiplier="1.4"
+            android:text="المكالمة تجي للتطبيق مباشرة عبر الإنترنت، لا عبر شبكة الجوال. الصوت رقمي بالكامل: صفر ميكروفون، وصفر التقاط لأي صوت حولك.
+
+تحتاج حساب SIP من مزوّد رقم. بعدها حوّل جوالك على ذلك الرقم بالكود:
+**61*&lt;الرقم&gt;#"
+            android:textColor="#9AA8BB"
+            android:textSize="13sp" />
+
+        <EditText android:id="@+id/sipServer" style="@style/Field"
+            android:hint="خادم SIP (مثال: sip.provider.com)" android:inputType="textUri" />
+        <EditText android:id="@+id/sipUser" style="@style/Field"
+            android:hint="اسم المستخدم" />
+        <EditText android:id="@+id/sipPass" style="@style/Field"
+            android:hint="كلمة المرور" android:inputType="textPassword" />
+
+        <TextView
+            android:id="@+id/sipStatus"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="8dp"
+            android:textColor="#4DA3FF"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:text="متوقف" />
+
+        <Button
+            android:id="@+id/sipBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="شغّل الخط" />
+
+        <!-- ══ متى يرد ══ -->
+        <TextView style="@style/Head" android:text="متى يرد" />
+
+        <RadioGroup
+            android:id="@+id/mode"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#1A2029"
+            android:padding="12dp">
+
+            <RadioButton android:id="@+id/manual" style="@style/Radio"
+                android:text="أنا أضغط الزر — يظهر لك إشعار مع كل مكالمة" />
+            <RadioButton android:id="@+id/auto15" style="@style/Radio"
+                android:text="تلقائياً بعد 15 ثانية لو ما رديت" />
+            <RadioButton android:id="@+id/auto25" style="@style/Radio"
+                android:text="تلقائياً بعد 25 ثانية لو ما رديت" />
+        </RadioGroup>
+
+        <!-- ══ الشخصية ══ -->
+        <TextView style="@style/Head" android:text="الشخصية" />
+
+        <EditText android:id="@+id/owner" style="@style/Field" android:hint="اسمك" />
+        <EditText android:id="@+id/secName" style="@style/Field" android:hint="اسم المساعد" />
+        <EditText android:id="@+id/status" style="@style/Field" android:hint="حالتك (مشغول في اجتماع…)" />
+        <EditText android:id="@+id/freeAfter" style="@style/Field" android:hint="لو سأل متى ترجع" />
+
+        <!-- ══ المفاتيح ══ -->
+        <TextView style="@style/Head" android:text="المفاتيح" />
+
+        <EditText android:id="@+id/geminiKey" style="@style/Field"
+            android:hint="مفتاح Gemini (إلزامي)" android:inputType="textPassword" />
+        <EditText android:id="@+id/tgToken" style="@style/Field"
+            android:hint="توكن بوت تيليجرام" android:inputType="textPassword" />
+        <EditText android:id="@+id/tgChat" style="@style/Field"
+            android:hint="رقم محادثتك في تيليجرام" android:inputType="number" />
+
+        <Button
+            android:id="@+id/saveBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:text="احفظ" />
+
+        <Button
+            android:id="@+id/tgTestBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="جرّب تيليجرام" />
+
+        <!-- ══ اختبار الصوت ══ -->
+        <TextView style="@style/Head" android:text="الطريقة القديمة (مكبّر الصوت) — لا يُنصح بها" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#1A2029"
+            android:padding="14dp"
+            android:lineSpacingMultiplier="1.4"
+            android:text="مهم: أندرويد ما يسمح لأي تطبيق يحط صوته داخل المكالمة مباشرة. التطبيق يشغّل مكبّر الصوت، والميكروفون ينقل صوت السكرتير للمتصل.\n\nهذا يشتغل على أغلب الأجهزة لكن مو كلها. اختبره قبل ما تعتمد عليه:\n\n1. اتصل على جوالك من جوال ثاني.\n2. رد بنفسك، وحط الجوال على مكبّر الصوت.\n3. اضغط الزر تحت.\n4. من الجوال الثاني: هل تسمع صوت السكرتير؟"
+            android:textColor="#9AA8BB"
+            android:textSize="13sp" />
+
+        <Button
+            android:id="@+id/testBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="شغّل اختبار الصوت" />
+
+        <Button
+            android:id="@+id/probeBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="فحص المسارات الصوتية" />
+
+        <Button
+            android:id="@+id/logBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            android:layout_marginBottom="24dp"
+            android:text="سجل المكالمات" />
+
+    </LinearLayout>
+</ScrollView>

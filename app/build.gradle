@@ -1,0 +1,40 @@
+plugins {
+    id 'com.android.application'
+}
+
+android {
+    namespace 'com.osaid.sawtsecretary'
+    compileSdk 34
+
+    defaultConfig {
+        applicationId "com.osaid.sawtsecretary"
+        minSdk 26
+        targetSdk 34
+        versionCode 1
+        versionName "1.0"
+    }
+
+    // لا توجد كتلة signingConfigs في المستودع العام.
+    // للتوقيع: أنشئ مخزن مفاتيح خاصاً بك، وضع قيمه في keystore.properties
+    // غير المتعقَّب أو في متغيرات بيئة، ثم أضف كتلة signingConfigs محلياً.
+    // No signing config is committed. Create your own keystore and read its
+    // values from an untracked keystore.properties file or from env vars.
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+}
+
+dependencies {
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation 'com.google.android.material:material:1.11.0'
+    implementation 'com.squareup.okhttp3:okhttp:4.12.0'
+}

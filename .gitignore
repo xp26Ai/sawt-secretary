@@ -1,0 +1,66 @@
+# ── توقيع التطبيق — الأخطر في هذا المشروع ──
+# release.keystore يوقّع نسخاً باسمك. لا يُرفع أبداً.
+*.keystore
+*.jks
+*.p12
+*.pfx
+keystore.properties
+signing.gradle
+signing.properties
+
+# ── مفاتيح وأسرار ──
+# مفتاح Gemini وتوكن تيليجرام وبيانات مزوّد SIP تُحفظ في SharedPreferences
+# على الجهاز، لا في المستودع. هذه الأنماط تمنع أي تسريب لاحق.
+.env
+.env.*
+secrets.properties
+local.env
+google-services.json
+*.pem
+*.key
+api-key*.txt
+
+# ── ملفات خاصة بجهاز المطوّر ──
+local.properties
+gradle.properties.local
+.idea/
+*.iml
+*.ipr
+*.iws
+captures/
+
+# ── نواتج البناء ──
+build/
+app/build/
+.gradle/
+.cxx/
+*.apk
+*.aab
+*.ap_
+*.dex
+*.class
+release/
+out/
+
+# ── مخرجات اختبار SIP ──
+siptest/out/
+siptest/*.log
+siptest/sim.log
+siptest/client.log
+
+# ── سجلات ونسخ احتياطية ──
+*.log
+*.bak
+*.tmp
+backup_*/
+
+# ── أدوات وكلاء محلية ──
+.acp-*/
+.acp-sessions/
+.acp-fingerprint.json
+.acp-lessons.md
+
+# ── نظام التشغيل ──
+.DS_Store
+Thumbs.db
+desktop.ini

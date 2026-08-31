@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Theme.Sawt" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="colorPrimary">#2B7FD4</item>
+        <item name="colorPrimaryVariant">#4DA3FF</item>
+        <item name="colorOnPrimary">#FFFFFF</item>
+        <item name="android:windowBackground">#0E1117</item>
+        <item name="android:textColorPrimary">#E6EDF5</item>
+    </style>
+
+    <style name="Head">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">22dp</item>
+        <item name="android:layout_marginBottom">8dp</item>
+        <item name="android:textColor">#9AA8BB</item>
+        <item name="android:textSize">13sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="Field">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginBottom">8dp</item>
+        <item name="android:background">#161B25</item>
+        <item name="android:padding">13dp</item>
+        <item name="android:textColor">#E6EDF5</item>
+        <item name="android:textColorHint">#6B7889</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:inputType">text</item>
+        <item name="android:maxLines">2</item>
+    </style>
+
+    <style name="Radio">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingTop">6dp</item>
+        <item name="android:paddingBottom">6dp</item>
+        <item name="android:textColor">#E6EDF5</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+</resources>
