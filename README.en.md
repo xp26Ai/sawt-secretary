@@ -4,20 +4,20 @@
 
 **A real phone call comes in → a written summary goes out on Telegram.**
 
-An Android app that takes your forwarded calls over a SIP line and wires the call audio straight into Gemini Live.
-The network stack is hand-written: 741 lines of Java covering SIP, RTP and G.711 encoding, with no telephony library.
+An Android app that takes your forwarded calls over a SIP line. It sends the call audio straight into Gemini Live.
+I wrote the network stack myself: 741 lines of Java for SIP, RTP and G.711 encoding. No telephony library.
 The whole app is 2,972 lines, with three dependencies: `appcompat`, `material` and `okhttp`.
-The model asks the caller for a name, a topic and a callback number, then hangs up and sends the summary.
+The model asks the caller for a name, a topic and a callback number. Then it hangs up and sends the summary.
 
 ---
 
 ## The problem
 
-The easy path looks obvious: the app answers the call, then opens the speaker and the microphone.
+The easy path looks obvious. The app answers the call, then opens the speaker and the microphone.
 
 I measured that path on a real device. The in-app microphone meter read **zero** during the call.
-Android keeps call audio away from ordinary apps, and there is no API to get around it.
-Even if it could hear, the speaker sends everything in the room back to the caller.
+Android keeps call audio away from normal apps. No API gets around it.
+And if it could hear, the speaker sends the room noise back to the caller.
 
 `AudioProbeActivity.java` runs that measurement and prints what the system reported, word for word.
 
@@ -41,23 +41,24 @@ One chain: caller → carrier forwarding → SIP provider → app → Gemini Liv
 Three points worth calling out:
 
 - **Silence is not nothing.** We send comfort-noise bytes every 20 ms. The network expects a steady stream, not bursts.
-- **Barge-in.** When the caller talks over the secretary, we flush the send queue and it goes quiet at once.
-- **A dead field.** `realtime_input.media_chunks` is in the Gemini docs, but it kills the session with code 1007.
+- **Barge-in.** The caller can talk over the secretary. We flush the send queue and it goes quiet at once.
+- **A dead field.** The Gemini docs list `realtime_input.media_chunks`. But it kills the session with code 1007.
 
 ---
 
 ## The key design decision
 
-**The problem:** the easy path died under measurement, and the only alternative is owning the whole audio path.
+**The problem:** the easy path died under measurement. The only other option is to own the whole audio path.
 
-**The decision:** write the SIP, RTP and G.711 stack myself instead of pulling in a ready-made stack.
-SIP only has to do three things here — register, answer a call, hang up.
-And tight control over send timing is the whole point, which is the first thing a library hides.
+**The decision:** write the SIP, RTP and G.711 stack myself. No ready-made stack.
+SIP only does three things here: register, answer a call, hang up.
+And tight control over send timing is the whole point. A library hides that first.
 
-**The cost:** 741 lines to write and maintain, and three protocols I am now responsible for getting right.
+**The cost:** 741 lines to write and keep working. And three protocols I now have to get right.
 
-**The payoff:** the audio is digital in both directions, so nothing is ever picked up from the room. And the timing is
-mine: the send loop corrects its own drift with `System.nanoTime()` after every frame, and the measurement below shows it.
+**The payoff:** the audio is digital in both directions. Nothing is ever picked up from the room.
+The timing is mine too. The send loop fixes its own drift with `System.nanoTime()` after every frame.
+The measurement below shows it.
 
 ---
 
@@ -69,9 +70,9 @@ Build the app:
 build.bat            # builds an unsigned release APK
 ```
 
-No signing key ships in this repo; sign the output with your own keystore.
-The Gemini key, the Telegram token and the SIP account are entered in the
-settings screen and stored in `SharedPreferences` on the device, not in code.
+No signing key ships in this repo. Sign the output with your own keystore.
+You enter the Gemini key, the Telegram token and the SIP account in settings.
+The app stores them in `SharedPreferences` on the device, not in code.
 
 Test the stack with no number and no provider account:
 
@@ -79,9 +80,10 @@ Test the stack with no number and no provider account:
 siptest\run-test.bat
 ```
 
-A SIP provider simulator in 248 lines of Node.js. It demands Digest auth and **actually verifies it** with MD5,
-then sends an `INVITE`, streams a 400 Hz tone as the caller's voice, hangs up with `BYE` and prints the report.
-It runs against the same SIP files that ship in the app — no separate test copy.
+A SIP provider simulator in 248 lines of Node.js. It asks for Digest auth and **actually verifies it** with MD5.
+Then it sends an `INVITE`. It streams a 400 Hz tone as the caller's voice.
+Then it hangs up with `BYE` and prints the report.
+It runs against the same SIP files that ship in the app. There is no separate test copy.
 
 Last measured run:
 
@@ -102,17 +104,18 @@ Last measured run:
   ✓ الصوت يمشي في الاتجاهين
 ```
 
-The simulator prints in Arabic. The report lines read: packets we sent to the app **353**,
-packets that came back from the app **450** over **9.0 s**, first packet back after **2644 ms**,
-audio flowing both ways.
+The simulator prints in Arabic. The report lines read: we sent **353** packets to the app.
+The app sent back **450** packets over **9.0 s**. The first packet came back after **2644 ms**.
+Audio flows both ways.
 
-The gap between 353 and 450 in the same window is not a fault: Node's `setInterval` drifts under load,
-while the send loop in the app corrects its drift after every frame. That gap is what the code was built for.
+The gap between 353 and 450 in the same window is not a fault.
+Node's `setInterval` drifts under load. The send loop in the app fixes its drift after every frame.
+That gap is what the code was built for.
 
 ---
 
 ## Why I built it
 
-I work as an IT supervisor, and I miss calls while I am out on site.
+I work as an IT supervisor. I miss calls while I am out on site.
 
-I tried the easy path, the microphone meter read zero, so I built the digital line instead.
+I tried the easy path. The microphone meter read zero. So I built the digital line instead.
